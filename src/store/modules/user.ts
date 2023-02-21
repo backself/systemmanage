@@ -20,7 +20,7 @@ const getters = {
 // mutations
 const mutations = {
   tokenChange(state: userState, token: string) {
-    state.token = token
+    state.token = token //修改数据内容，广播至store，修改仓库模块数据
   },
   infoChange(state: userState, info: object) {
     state.info = info

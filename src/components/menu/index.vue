@@ -10,3 +10,8 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss" scoped>
+  .el-main-box{
+	  height: 100%;
+  }
+</style>

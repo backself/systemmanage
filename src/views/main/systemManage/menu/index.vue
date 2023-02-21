@@ -1,5 +1,10 @@
 <template>
   <div class="layout-container">
+	  
+	  <div class="layout-container-form-handle">
+	    <el-button type="primary" :icon="Plus" @click="handleAdd">{{ $t('message.common.add') }}</el-button>
+	  </div>
+	  
     <div class="box">
       <el-tree
         ref="tree"
@@ -13,6 +18,14 @@
         <template #default="{ node, data }">
           <div class="custom-tree-node" @click="show(node, data)">
             <span v-if="data.meta">{{ $t(data.meta.title) }}</span>
+			<el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
+			<el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">
+			  <template #reference>
+			    <el-button type="danger">{{ $t('message.common.del') }}</el-button>
+			  </template>
+			</el-popconfirm>
+			
+			
           </div>
         </template>
       </el-tree>

@@ -9,18 +9,18 @@ export default [
       return {
         code: 200,
         data: {
-          [`list|${pageSize}`]: [{
-            'id|+1': 0,
-            name: '@name',
-            nickName: '@cname',
-            'status|1': [0,1],
-            'role|1': roles,
-            'isAdmin|1': [0,1]
-          }],
+          list: [{
+			"id": 0,
+			"name": "Sharon Jackson",
+			"nickName": "赵丽",
+			"status": 1,
+			"role": roles[0],
+			"isAdmin": 1
+		}],
           pager: {
             page: page,
             pageSize: pageSize,
-            total: 198
+            total: 1
           }
         },
         msg: ''
@@ -43,7 +43,7 @@ export default [
     method: 'post',
     response: ({ body }) => {
       return {
-        code: 200,
+        code: 401,
         data: {},
         msg: ''
       };

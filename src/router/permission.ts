@@ -16,28 +16,14 @@ import { createNameComponent } from './createNode'
 
 /** 引入需要权限的Modules */
 import Dashboard from './modules/dashboard'
-import Document from './modules/document'
-import Pages from './modules/pages'
-import Menu from './modules/menu'
-import Component from './modules/component'
-import Directive from './modules/directive'
+import Products from './modules/products'
 import SystemManage from './modules/systemManage'
-import Chart from './modules/chart'
-import Print from './modules/print'
-import Community from './modules/community'
 
 /** 登录后需要动态加入的本地路由 */
 const asyncRoutes: Route[] = [
   ...Dashboard,
-  ...Document,
-  ...Component,
-  ...Pages,
-  ...Menu,
-  ...Directive,
-  ...Chart,
+  ...Products,
   ...SystemManage,
-  ...Print,
-  ...Community,
 ]
 
 /** 
