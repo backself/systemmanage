@@ -1,29 +1,38 @@
 <template>
   <Layer :layer="layer" @confirm="submit">
     <el-form :model="ruleForm" :rules="rules" ref="form" label-width="120px" style="margin-right:30px;">
-      <el-form-item label="名称：" prop="name">
+      <el-form-item label="用户名：" prop="name">
         <el-input v-model="ruleForm.name" placeholder="请输入名称"></el-input>
       </el-form-item>
-      <el-form-item label="数字：" prop="sort">
-        <el-input v-model="ruleForm.sort" oninput="value=value.replace(/[^\d]/g,'')" placeholder="只能输入正整数"></el-input>
-      </el-form-item>
-			<el-form-item label="选择器：" prop="select">
-			  <el-select v-model="ruleForm.select" placeholder="请选择" clearable>
-					<el-option
-						v-for="item in options"
-						:key="item.value"
-						:label="item.label"
-						:value="item.value">
-					</el-option>
-				</el-select>
-			</el-form-item>
-      <el-form-item label="单选框：" prop="radio">
-        <el-radio-group v-model="ruleForm.radio">
-          <el-radio :label="0">最新开播</el-radio>
-          <el-radio :label="1">最早开播</el-radio>
-          <el-radio :label="2">最多观看</el-radio>
-        </el-radio-group>
-      </el-form-item>
+	  <el-form-item label="昵称：" prop="nickName">
+	    <el-input v-model="ruleForm.name" placeholder="请输入名称"></el-input>
+	  </el-form-item>
+	  
+	  <el-form-item prop="ruleForm.status" label="状态" align="center">
+	    <template #default="scope">
+	      <span class="statusName">{{ ruleForm.status === 1 ? "启用" : "禁用" }}</span>
+	      <el-switch
+	        v-model="ruleForm.status"
+	        active-color="#13ce66"
+	        inactive-color="#ff4949"
+	        :active-value="1"
+	        :inactive-value="0"
+	        :loading="ruleForm.loading"
+	      ></el-switch>
+	    </template>
+	  </el-form-item>
+
+		<el-form-item label="角色类别：" prop="role">
+		  <el-select v-model="ruleForm.role" placeholder="请选择" clearable>
+				<el-option
+					v-for="item in options"
+					:key="item.value"
+					:label="item.label"
+					:value="item.value">
+				</el-option>
+			</el-select>
+		</el-form-item>
+
     </el-form>
   </Layer>
 </template>
@@ -49,9 +58,23 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
+	  console.log("传入参数",props);
     let ruleForm = reactive({
-      name: ''
+		id:'',
+      name: '',
+	  nickName:'',
+	  role:'',
+	  status:''
     })
+	if (props.layer.row) {
+		ruleForm.id = props.layer.row.id;
+		ruleForm.name = props.layer.row.name;
+		ruleForm.nickName = props.layer.row.nickName;
+		ruleForm.role = props.layer.row.role;
+		ruleForm.status = props.layer.row.status;
+	} 
+	
+	
     const rules = {
       name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
       sort: [{ required: true, message: '请输入数字', trigger: 'blur' }],
@@ -59,10 +82,10 @@ export default defineComponent({
       radio: [{ required: true, message: '请选择', trigger: 'blur' }]
     }
     const options = [
-      { value: 1, label: '运动'},
-      { value: 2, label: '健身'},
-      { value: 3, label: '跑酷'},
-      { value: 4, label: '街舞'},
+      { value: '系统管理员', label: '系统管理员'},
+      { value: '平台管理员', label: '平台管理员'},
+      { value: '数据统计人员', label: '数据统计人员'},
+      { value: "信息录入人员", label: '信息录入人员'},
     ]
     return {
       ruleForm,
@@ -76,6 +99,7 @@ export default defineComponent({
         if (valid) {
           let params = this.ruleForm
           if (this.layer.row) {
+			params.id = this.layer.row.id;
             this.updateForm(params)
           } else {
             this.addForm(params)
@@ -105,6 +129,7 @@ export default defineComponent({
           type: 'success',
           message: '编辑成功'
         })
+		this.layer.show = false
         this.$emit('getTableData', false)
       })
     }

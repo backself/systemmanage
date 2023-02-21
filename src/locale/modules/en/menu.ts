@@ -8,7 +8,8 @@ export default {
       name: 'system',
       redirect: 'redirect',
       '404': '404',
-      '401': '401'
+      '401': '401',
+	  'execption':'no match url and redirect to spec url'
     },
     component: {
       name: 'component',

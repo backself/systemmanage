@@ -43,15 +43,10 @@
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="id" label="Id" align="center" width="80" />
+        <el-table-column prop="id" label="用户编号" align="center" width="80" />
         <el-table-column prop="name" label="用户名" align="center" />
         <el-table-column prop="nickName" label="昵称" align="center" />
-        <el-table-column prop="role" label="角色" align="center" />
-        <el-table-column prop="isAdmin" label="超级管理员" align="center">
-          <template #default="scope">
-            <span class="statusName">{{ scope.row.isAdmin === 1 ? "是" : "否" }}</span>
-          </template>
-        </el-table-column>
+        <el-table-column prop="role" label="角色列表" align="center" />
         <el-table-column prop="status" label="状态" align="center">
           <template #default="scope">
             <span class="statusName">{{ scope.row.status === 1 ? "启用" : "禁用" }}</span>
@@ -168,6 +163,7 @@ export default defineComponent({
           })
           .join(","),
       };
+	  console.log("请求参数为：",params);
       del(params).then((res) => {
         ElMessage({
           type: "success",
@@ -187,6 +183,7 @@ export default defineComponent({
       layer.title = "编辑数据";
       layer.row = row;
       layer.show = true;
+	  console.log("请求参数为：",row);
     }
     // 状态编辑功能
     const handleUpdateStatus = (row: any) => {
@@ -198,6 +195,7 @@ export default defineComponent({
         id: row.id,
         status: row.status
       }
+	  console.log("请求参数为：",params);
       updateStatus(params)
       .then(res => {
         ElMessage({

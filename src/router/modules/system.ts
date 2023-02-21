@@ -1,3 +1,6 @@
+/**
+ * 路径不匹配异常异常页面
+ */
 import type { Route } from '../index.type'
 import Layout from '@/layout/index.vue'
 import { createNameComponent } from '../createNode'
@@ -28,18 +31,20 @@ const route: Route[] = [
   },
   {
     path: '/login',
-    component: createNameComponent(() => import('@/views/system/login.vue')),
+    component: createNameComponent(
+			() => import('@/views/system/login.vue')
+		),
     hideMenu: true,
     meta: { title: 'message.system.login', hideTabs: true }
   },
   {
     // 找不到路由重定向到404页面
-    path: "/:pathMatch(.*)",
+    path: '/:pathMatch(.*)',
     component: Layout,
     redirect: "/404",
     hideMenu: true,
-    meta: { title: '' },
-  },
+    meta: { title: 'message.menu.system.execption' }
+  }
 ]
 
 export default route

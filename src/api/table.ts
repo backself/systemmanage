@@ -59,3 +59,4 @@ export function del(data: object) {
     data
   })
 }
+
