@@ -19,16 +19,43 @@
         ref="table"
         v-model:page="page"
         v-loading="loading"
-        :showIndex="true"
         :showSelection="true"
         :data="tableData"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="name" label="名称" align="center" />
-        <el-table-column prop="number" label="数字" align="center" />
-        <el-table-column prop="chooseName" label="选择器" align="center" />
-        <el-table-column prop="radioName" label="单选框" align="center" />
+		<el-table-column prop="productId" label="编号" align="center" />
+        <el-table-column prop="productName" label="名称" align="center" />
+        <el-table-column prop="productRepertories" label="库存" align="center" />
+		
+		<el-table-column prop="productMatchType" label="匹配模式" align="center">
+		  <template #default="scope">
+		    <span class="statusName">{{ scope.row.productMatchType === 1 ? "精准" : "通用" }}</span>
+		    <el-switch
+		      v-model="scope.row.productMatchType"
+		      active-color="#13ce66"
+		      inactive-color="#ff4949"
+		      :active-value="1"
+		      :inactive-value="0"
+		      :loading="scope.row.loading"
+		    ></el-switch>
+		  </template>
+		</el-table-column>
+		
+		<el-table-column prop="productStatus" label="产品上线状态" align="center">
+		  <template #default="scope">
+		    <span class="statusName">{{ scope.row.productStatus === 1 ? "已上线" : "已下线" }}</span>
+		    <el-switch
+		      v-model="scope.row.productStatus"
+		      active-color="#13ce66"
+		      inactive-color="#ff4949"
+		      :active-value="1"
+		      :inactive-value="0"
+		      :loading="scope.row.loading"
+		    ></el-switch>
+		  </template>
+		</el-table-column>
+		
         <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="200">
           <template #default="scope">
             <el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
@@ -49,7 +76,7 @@
 import { defineComponent, ref, reactive } from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del } from '@/api/table'
+import { getData, del } from '@/api/product/query'
 import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'

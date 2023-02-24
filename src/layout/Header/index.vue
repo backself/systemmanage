@@ -20,7 +20,7 @@
       <div class="user-info">
         <el-dropdown>
           <span class="el-dropdown-link">
-            {{ $t('message.system.user') }}
+            {{username}}
             <i class="sfont system-xiala"></i>
           </span>
           <template #dropdown>
@@ -79,12 +79,15 @@ export default defineComponent({
     const showPasswordLayer = () => {
       layer.show = true
     }
+	// 读取当前用户信息
+	let username = store.getters['user/token'];
     return {
       isCollapse,
       layer,
       opendStateChange,
       loginOut,
-      showPasswordLayer
+      showPasswordLayer,
+	  username
     }
   }
 })

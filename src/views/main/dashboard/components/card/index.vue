@@ -5,19 +5,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent,ref } from 'vue'
+import {getOnlineData} from "@/api/dashboard/online"
 import Row from './row.vue'
 export default defineComponent({
   components: {
     Row
   },
   setup() {
-    const list = [
-      { id: 1, name: '在线用户人数', data: '200', color: '#4e73df', icon: 'sfont system-yonghu' },
-      { id: 2, name: '最新未读消息', data: '20', color: '#1cc88a', icon: 'sfont system-xiaoxi' },
-      { id: 3, name: '当前库存数量', data: '20000', color: '#36b9cc', icon: 'sfont system-shuliang_mianxing' },
-      { id: 4, name: '当月售出总量', data: '20,000', color: '#f6c23e', icon: 'sfont system-jindutiaoshouyidaozhang' }
-    ]
+	  
+    let list = ref([]);
+	
+	function initOnline(){
+		let params = {};
+		getOnlineData(params).then(function(res){
+			list.value = res.data;
+		});
+	}
+	initOnline();
     return {
       list
     }

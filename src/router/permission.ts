@@ -30,7 +30,7 @@ const asyncRoutes: Route[] = [
  * @name 动态路由的权限新增，供登录后调用
  * @other 如果需要进行后端接口控制菜单的话，请在此拿到后端的菜单树与asyncRoutes对比，生成一个新的值
  */
-function addRoutes() {
+function addRoutes(urls:Array) {
   // 已验证完成，下面代码添加的可以实时同步至菜单中去，可以添加setTimeout(() => {}) 模拟异步代码的操作
   // 利用前端路由表模拟后端数据问题
   asyncRoutes.forEach(item => {
@@ -40,11 +40,11 @@ function addRoutes() {
 }
 
 /**
- * @des 登录了之后会执行这个方法，实现动态路由的功能
+ * @des 登录了之后并获取到菜单列表时会执行这个方法，实现动态路由的功能
  */
-export function getAuthRoutes() {
+export function getAuthRoutes(urls:Array) {
   // 判断token是否存在，存在则调用添加路由的方法
   if (store.state.user.token) {
-    addRoutes()
+    addRoutes(urls)
   }
 }

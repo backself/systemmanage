@@ -14,6 +14,9 @@ const state = (): userState => ({
 const getters = {
   token(state: userState) {
     return state.token
+  },
+  info(state: userState) {
+    return state.info
   }
 }
 

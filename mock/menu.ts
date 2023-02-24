@@ -17,7 +17,7 @@ const menu = [
 export default [
   /** 需要展示的菜单模拟接口 */
   {
-    url: `/mock/menu/list`,
+    url: `/mock/auth/menu/list`,
     method: 'post',
     response: ({ body }) => {
       return {

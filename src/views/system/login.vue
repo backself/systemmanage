@@ -117,7 +117,7 @@ export default defineComponent({
             duration: 1000
           })
           location.reload()
-          // await getAuthRoutes()
+          // await getAuthRoutes();
           // await router.push(route.query.redirect as RouteLocationRaw || '/')
         }).finally(() => {
           form.loading = false

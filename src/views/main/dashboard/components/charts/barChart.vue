@@ -5,16 +5,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent,ref } from 'vue'
 import Chart from '@/components/charts/index.vue'
-import option from './modules/bar'
+import { getData } from '@/api/dashboard/bar_chart'
 export default defineComponent({
   components: {
     Chart
   },
   setup() {
+	  let params = {};
+	  let option = ref({});
+	  function initCTableData(params:any){
+		  getData(params).then(function(res:any){
+		  		  option.value = res.data;
+		  })
+	  }
+	  initCTableData(params);
+	  
     return {
-      option
+      option,
+	  initCTableData
     }
   }
 })
