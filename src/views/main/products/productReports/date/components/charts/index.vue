@@ -11,8 +11,10 @@
 	  	  >
 	  	</div>
 	</el-row>
+	
 		<barChart :downloadFileParamsForBarChart="sendDownloadFileParamsForBarChart" 
 		@update:barChartComponentParams="updateDownloadParams"/>
+		
     <el-row :gutter="20">
 		
     </el-row>
@@ -25,17 +27,32 @@ import barChart from './barChart.vue'
 import { ElMessage } from 'element-plus'
 import { aoaToSheetXlsx } from '@/utils/file/ExportExcel'
 import { Download } from '@element-plus/icons'
+import REPORT_TYPE from '@/views/main/products/productReports/commons/enum'
 
 export default defineComponent({
   components: {
     barChart,
   },
   setup() {
+	  let startTime = new Date();
+	  startTime.setHours(7);
+	  startTime.setMinutes(0);
+	  startTime.setSeconds(0);
+	  startTime.setMilliseconds(0);
+	  let entTime = new Date( startTime - 24*60*60*1000);//减去一天就是前一天的时间
+	  
+	  console.log("今天",startTime);
+	  console.log("昨天",entTime);
+	  let params = {
+	  	type:REPORT_TYPE.DAY_REPORT,
+	  	startTime:startTime,
+	  	entTime:entTime,
+	  	productId:1,
+	  	userId:1
+	  }
+	  
 	  //下载请求的参数配置，需要charts中barChart组件将此参数修改后同步到当前组件
-	  let sendDownloadFileParamsForBarChart = reactive({
-		  		  p1:'父的',
-		  		  p2:'参数'
-	  });
+	  let sendDownloadFileParamsForBarChart = reactive(params);
 	  
 	  const handleExportExcel = () => {
 	  	ElMessage({
@@ -69,10 +86,10 @@ export default defineComponent({
 		  }
   },
   methods:{
-	  updateDownloadParams(params){
+	  updateDownloadParams(params:object){
 		  //当一个对象作为props属性传递时，修改其值需要修改属性值来修改整个对象的值，不能用'='来直接赋值
-		  this.sendDownloadFileParamsForBarChart.p1 = params.p1;
-		  this.sendDownloadFileParamsForBarChart.p2 = params.p2;
+		  this.sendDownloadFileParamsForBarChart.startTime = params.startTime;
+		  this.sendDownloadFileParamsForBarChart.endTime = params.endTime;
 		  console.log("当前父组件的参数",this.sendDownloadFileParamsForBarChart);
 	  }
   }

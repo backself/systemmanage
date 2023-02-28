@@ -11,9 +11,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue'
+import { defineComponent,ref} from 'vue'
 import Chart from '@/components/charts/index.vue'
-import option from './modules/bar'
+import {setOption} from '@/views/main/products/productReports/commons/barTemplate'
+import REPORT_TYPE from '@/views/main/products/productReports/commons/enum'
+import {getData} from '@/api/product/report'
 export default defineComponent({
 	components: {
 	  Chart
@@ -23,26 +25,50 @@ export default defineComponent({
 			type:Object,
 			default:()=>{
 				return {
-					p1:'默认值',
-					p2:'默认参值',
-				}
+					type:REPORT_TYPE.DAY_REPORT,
+					startTime:"",
+					entTime:"",
+					productId:1,
+					userId:1
+				  }
 			}
 		}
 	},
 	setup(props) {
+		let params = props.downloadFileParamsForBarChart;
+		const option =ref({});
+		// 初始化图表数据
+		function init(params:object){
+			getData(params).then(function(res){
+				option.value = setOption(res.data);
+			})
+		}
 		
+		init(params);
 	  return {
 	    option,
 	  }
 	},
 	methods:{
+		//修改传递给父级组件的参数
 		changeParamsToDownloadFile(){
-			let tmp = {downloadFileParamsForBarChart:{
-									p1:Math.random(10),
-									p2:"de",
-								},
-						}
-			this.props = tmp;
+			let startTime = new Date();
+			startTime.setHours(7);
+			startTime.setMinutes(0);
+			startTime.setSeconds(0);
+			startTime.setMilliseconds(0);
+			let entTime = new Date( startTime - 24*60*60*1000);//减去一天就是前一天的时间
+			
+			console.log("今天",startTime);
+			console.log("昨天",entTime);
+			let params = {
+				type:REPORT_TYPE.DAY_REPORT,
+				startTime:startTime,
+				entTime:entTime,
+				productId:1,
+				userId:1
+			}
+			this.props = {downloadFileParamsForBarChart:params};
 			console.log("子组件传递到父组件的参数",this.props.downloadFileParamsForBarChart);
 			this.$emit('update:barChartComponentParams',this.props.downloadFileParamsForBarChart); 
 		}

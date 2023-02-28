@@ -30,7 +30,7 @@
 		
 		<el-table-column prop="productMatchType" label="匹配模式" align="center">
 		  <template #default="scope">
-		    <span class="statusName">{{ scope.row.productMatchType === 1 ? "精准" : "通用" }}</span>
+			<el-tooltip :content="scope.row.productMatchType === 1 ? '精准' : '通用'" placement="top">
 		    <el-switch
 		      v-model="scope.row.productMatchType"
 		      active-color="#13ce66"
@@ -38,13 +38,15 @@
 		      :active-value="1"
 		      :inactive-value="0"
 		      :loading="scope.row.loading"
+			  @change="handleStatusAndMatchType(scope.row)"
 		    ></el-switch>
+			</el-tooltip>
 		  </template>
 		</el-table-column>
 		
 		<el-table-column prop="productStatus" label="产品上线状态" align="center">
 		  <template #default="scope">
-		    <span class="statusName">{{ scope.row.productStatus === 1 ? "已上线" : "已下线" }}</span>
+			<el-tooltip :content="scope.row.productStatus === 1 ? '已上线' : '已下线'" placement="top">
 		    <el-switch
 		      v-model="scope.row.productStatus"
 		      active-color="#13ce66"
@@ -52,7 +54,9 @@
 		      :active-value="1"
 		      :inactive-value="0"
 		      :loading="scope.row.loading"
+			  @change="handleStatusAndMatchType(scope.row)"
 		    ></el-switch>
+			</el-tooltip>
 		  </template>
 		</el-table-column>
 		
@@ -76,12 +80,12 @@
 import { defineComponent, ref, reactive } from 'vue'
 import Table from '@/components/table/index.vue'
 import { Page } from '@/components/table/type'
-import { getData, del } from '@/api/product/query'
+import { getData, del,update } from '@/api/product/query'
 import Layer from './layer.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
-import { selectData, radioData } from './enum'
 import { Plus, Search, Delete } from '@element-plus/icons'
+
 export default defineComponent({
   name: 'crudTable',
   components: {
@@ -126,14 +130,6 @@ export default defineComponent({
       getData(params)
       .then(res => {
         let data = res.data.list
-        if (Array.isArray(data)) {
-          data.forEach(d => {
-            const select = selectData.find(select => select.value === d.choose)
-            select ? d.chooseName = select.label : d.chooseName = d.choose
-            const radio = radioData.find(select => select.value === d.radio)
-            radio ? d.radioName = radio.label : d.radio
-          })
-        }
         tableData.value = res.data.list
         page.total = Number(res.data.pager.total)
       })
@@ -175,6 +171,21 @@ export default defineComponent({
       layer.show = true
     }
     getTableData(true)
+	
+	const handleStatusAndMatchType = (row:object) =>{
+		console.log(row,'=====')
+		let params = row;
+		update(params)
+		.then(res => {
+		  ElMessage({
+		    type: 'success',
+		    message: '编辑成功'
+		  });
+		  getTableData(true);
+		  
+		})
+	}
+	
     return {
       Plus,
       Search,
@@ -189,7 +200,8 @@ export default defineComponent({
       handleAdd,
       handleEdit,
       handleDel,
-      getTableData
+      getTableData,
+	  handleStatusAndMatchType
     }
   }
 })
