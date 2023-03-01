@@ -35,5 +35,35 @@ export default [
         data: menu
       }
     }
+  },
+  {
+    url: `/mock/auth/menu/add`,
+    method: 'post',
+    response: ({ body }) => {
+      return {
+        code: 200,
+        data: menu
+      }
+    }
+  },
+  {
+    url: `/mock/auth/menu/update`,
+    method: 'post',
+    response: ({ body }) => {
+      return {
+        code: 200,
+        data: menu
+      }
+    }
+  },
+  {
+    url: `/mock/auth/menu/del`,
+    method: 'post',
+    response: ({ body }) => {
+      return {
+        code: 200,
+        data: menu
+      }
+    }
   }
 ]

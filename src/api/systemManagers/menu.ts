@@ -19,3 +19,34 @@ export function getMenuData(data: object) {
     data
   })
 }
+
+// 新增
+export function add(data: object) {
+  return request({
+    url: 'auth/menu/add',
+    method: 'post',
+    baseURL: '/mock',
+    data
+  })
+}
+
+// 编辑
+export function update(data: object) {
+  return request({
+    url: 'auth/menu/update',
+    method: 'post',
+    baseURL: '/mock',
+    data
+  })
+}
+
+// 删除
+export function del(data: object) {
+  return request({
+    url: 'auth/menu/del',
+    method: 'post',
+    baseURL: '/mock',
+    data
+  })
+}
+
