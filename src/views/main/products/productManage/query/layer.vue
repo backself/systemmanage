@@ -90,8 +90,6 @@ export default defineComponent({
       rules,
       layerDom,
       ruleForm,
-      selectData,
-      radioData
     }
   },
   methods: {

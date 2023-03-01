@@ -5,7 +5,7 @@
         <el-input v-model="ruleForm.name" placeholder="请输入名称"></el-input>
       </el-form-item>
 	  <el-form-item label="昵称：" prop="nickName">
-	    <el-input v-model="ruleForm.name" placeholder="请输入名称"></el-input>
+	    <el-input v-model="ruleForm.nickName" placeholder="请输入昵称"></el-input>
 	  </el-form-item>
 	  
 	  <el-form-item prop="ruleForm.status" label="状态" align="center">
@@ -40,7 +40,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue'
 import Layer from '@/components/layer/index.vue'
-import { add, update } from '@/api/table'
+import { add, update } from '@/api/systemManagers/user'
 export default defineComponent({
   components: {
     Layer
@@ -58,7 +58,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-	  console.log("传入参数",props);
+	console.log("传入参数",props);
     let ruleForm = reactive({
 		id:'',
       name: '',
@@ -66,6 +66,7 @@ export default defineComponent({
 	  role:'',
 	  status:''
     })
+	
 	if (props.layer.row) {
 		ruleForm.id = props.layer.row.id;
 		ruleForm.name = props.layer.row.name;
@@ -74,23 +75,20 @@ export default defineComponent({
 		ruleForm.status = props.layer.row.status;
 	} 
 	
-	
     const rules = {
       name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-      sort: [{ required: true, message: '请输入数字', trigger: 'blur' }],
-      select: [{ required: true, message: '请选择', trigger: 'blur' }],
-      radio: [{ required: true, message: '请选择', trigger: 'blur' }]
+      nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+      role: [{ required: true, message: '请选择用户角色', trigger: 'blur' }]
     }
-    const options = [
-      { value: '系统管理员', label: '系统管理员'},
-      { value: '平台管理员', label: '平台管理员'},
-      { value: '数据统计人员', label: '数据统计人员'},
-      { value: "信息录入人员", label: '信息录入人员'},
-    ]
+
+	const options =[
+		{label:'AA',value:1},{label:'BB',value:2}
+	];
+
     return {
       ruleForm,
       rules,
-      options
+	  options,
     }
   },
   methods: {

@@ -90,7 +90,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
 import { Page } from "@/components/table/type";
-import { getData, del, updateStatus } from "@/api/system/user";
+import { getData, del, update } from "@/api/systemManagers/user";
 import { LayerInterface } from "@/components/layer/index.vue";
 import { ElMessage } from "element-plus";
 import Table from "@/components/table/index.vue";
@@ -122,6 +122,7 @@ export default defineComponent({
     const tableData = ref([]);
     const chooseData = ref([]);
     const handleSelectionChange = (val: []) => {
+		console.log(val);
       chooseData.value = val;
     };
     // 获取表格数据
@@ -196,7 +197,7 @@ export default defineComponent({
         status: row.status
       }
 	  console.log("请求参数为：",params);
-      updateStatus(params)
+      update(params)
       .then(res => {
         ElMessage({
           type: 'success',

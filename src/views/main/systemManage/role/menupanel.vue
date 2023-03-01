@@ -15,14 +15,13 @@
         highlight-current
         default-expand-all
 		:check-strictly="true"
-		@check="handleCheckedNodes"
       >
 	  </el-tree>
     </div>
 	<div class="row el-footer">
 		<el-button
 		  type="primary"
-		  @onclick="saveCurrentCheckedKeysToCurrentCheckedRole"
+		  @click="saveCurrentCheckedKeysToCurrentCheckedRole"
 		  >保存</el-button
 		>
 	</div>
@@ -31,10 +30,12 @@
 
 <script lang="ts">
 import type { Ref } from "vue";
-import { defineComponent, ref, inject, nextTick } from "vue";
-import { getMenuPanelListApi } from "@/api/role";
+import { defineComponent, ref, inject, nextTick,watch } from "vue";
+import { getMenuPanelListApi,savePanelListApi } from "@/api/systemManagers/role";
+import { ElMessage } from 'element-plus'
 export default defineComponent({
   setup() {
+	  
     let data = ref([]);
     const tree: Ref<any|null> = ref(null)
     const defaultProps = {
@@ -42,6 +43,7 @@ export default defineComponent({
       label: "urlName",
     };
     const active: any = inject("active");
+	console.log(active);
     const getMenuPanelListData = () => {
       let params = {};
       getMenuPanelListApi(params).then((res) => {
@@ -51,25 +53,32 @@ export default defineComponent({
         })
       });
     };
-    const handleNodeClick = (row: any) => {
-      active.value = row;
-	  console.log("选中了",row);
-    };
-	const handleCheckedNodes = (checkedNodes,checkedKeys,halfCheckedNodes,halfCheckedKeys )=>{
-		console.log("点击复选框",checkedKeys);
-	}
 	
 	const saveCurrentCheckedKeysToCurrentCheckedRole = function(){
-		console.log("保存角色菜单关联关系");
+		console.log("当前角色",active.value.authId,",的关联菜单列表为",tree.value.getCheckedKeys());
+		let params = {
+			authId:active.value.authId,
+			menuIds:tree.value.getCheckedKeys()
+		};
+		savePanelListApi(params).then((res)=>{
+			ElMessage({
+			  type: 'success',
+			  message: '保存成功！'
+			})
+			location.reload();
+		})
 	}
 	
     getMenuPanelListData();
-    
+    watch(active,(newV,oldV)=>{
+		console.log(newV)
+		// console.log(oldV)
+		getMenuPanelListData();
+	});
     return {
       data,
       tree,
       defaultProps,
-	  handleCheckedNodes,
 	  saveCurrentCheckedKeysToCurrentCheckedRole
     };
   },

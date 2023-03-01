@@ -27,7 +27,7 @@
 <script lang="ts">
 import type { Ref } from "vue";
 import { defineComponent, ref, inject, nextTick } from "vue";
-import { getRolePanelListApi } from "@/api/role";
+import { getRolePanelListApi } from "@/api/systemManagers/role";;
 export default defineComponent({
   setup() {
     let data = ref([]);
