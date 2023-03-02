@@ -1,18 +1,10 @@
 import { createProdMockServer } from 'vite-plugin-mock/es/createProdMockServer';
-import userModule from './mock/user'
-import tableModule from './mock/table'
-import cardModule from './mock/card'
-import workModule from './mock/work'
-import UserMoudle from './mock/systemUser'
-import MenuMoudle from './mock/systemManagers'
+// 加载所有的ts文件作为组件
+const Modules = import.meta.glob('./mock/*.ts');
 
 export function setupProdMockServer() {
+	// 创建mock接口
   createProdMockServer([
-    ...userModule,
-    ...tableModule,
-    ...cardModule,
-    ...workModule,
-    ...UserMoudle,
-	...MenuMoudle
+    ...Modules
   ]);
 }
