@@ -17,15 +17,11 @@ import store from '@/store'
 import i18n from '@/locale'
 import NProgress from '@/utils/system/nprogress'
 import { changeTitle } from '@/utils/system/title'
-import {getMenuData} from "@/api/systemManagers/menu"
-import { createNameComponent } from './createNode'
-import Layout from '@/layout/index.vue'
 
 NProgress.configure({ showSpinner: false })
 
 // 引入不需要权限的modules
 import System from './modules/system'
-import Dashboard from './modules/dashboard'
 
 /** 
  * @name 初始化必须要的路由
@@ -47,19 +43,11 @@ const router = createRouter({
 const whiteList = ['/login']
 
 // 路由跳转前的监听操作
-router.beforeEach(async(to, _from, next) => {
+router.beforeEach((to, _from, next) => {
 	console.log("路由跳转",to.path)
   NProgress.start();
   if (store.state.user.token) {
     to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
-	
-	// let res = await getMenuData({});
-	// let rs = transferMenu({});
-	// modules.push(rs);
-	// router.addRoute(rs);
-	// console.log("2=========",modules)
-	// modules.push(rs);
-	// router.addRoute(rs);
     if (to.path === '/login') {
       next('/')
       return
@@ -73,24 +61,6 @@ router.beforeEach(async(to, _from, next) => {
     to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
   }
 });
-
-function transferMenu(menu){
-	let item = {
-			path: '/',
-			component: Layout,
-			redirect: '/dashboard',
-			meta: { title: 'message.menu.dashboard.name', icon: 'sfont system-home' },
-			children: [
-			  {
-				path: 'dashboard',
-				component: createNameComponent(() => import('@/views/main/dashboard/index.vue')),
-				meta: { title: 'message.menu.dashboard.index', icon: 'sfont system-home', hideClose: true }
-			  }
-			]
-		  };
-	return item;
-}
-
 
 // 路由跳转后的监听操作
 router.afterEach((to, _from) => {

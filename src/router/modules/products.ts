@@ -1,7 +1,6 @@
 import type { Route } from '../index.type'
 import Layout from '@/layout/index.vue'
 import { createNameComponent } from '../createNode'
-import MenuBox from '@/components/menu/index.vue'
 const route: Route[] = [
   {
     path: '/pages',
@@ -14,7 +13,11 @@ const route: Route[] = [
 		  path: 'products-manage',
 		  component: createNameComponent(() => import('@/components/menu/index.vue')),
 		  redirect:'/pages/productsmanage/query',
-		  meta: { title: 'message.menu.page.products-manage.name', cache: false, roles: ['admin', 'editor'] },
+		  meta: { 
+			  title: 'message.menu.page.products-manage.name', 
+			  cache: false, 
+			  roles: ['admin', 'editor'] 
+			  },
 		  alwayShow: true,
 		  children:[
 			  {
