@@ -75,6 +75,7 @@ export default defineComponent({
     }
     // 选择监听器
     const handleSelectionChange = (val: []) =>{
+		console.log("监听器");
       context.emit("selection-change", val)
     }
     // 解决BUG：keep-alive组件使用时，表格浮层高度不对的问题

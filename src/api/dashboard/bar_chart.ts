@@ -1,10 +1,10 @@
 import request from '@/utils/system/request'
 
 // 获取首页中折线图的数据
-export function getData(params: object) {
+export function getDashboardBarChartData(params: object) {
   return request({
-    url: '/dashboard/bar_chart/list',
-    method: 'post',
+    url: '/dashboard/report/get',
+    method: 'get',
     baseURL: '/mock',
     params
   })

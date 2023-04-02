@@ -6,7 +6,7 @@ import list from './mockmodules/online'
 
 export default [
 	{
-		url: `/mock/dashboard/online/list`,
+		url: `/mock/dashboard/online`,
 		method: 'post',
 		response: ({ body }) => {
 			return {

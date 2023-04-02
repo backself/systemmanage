@@ -2,17 +2,20 @@
   <Layer :layer="layer" @confirm="submit">
     <el-form :model="ruleForm" :rules="rules" ref="form" label-width="120px" style="margin-right:30px;">
       <el-form-item label="用户名：" prop="name">
-        <el-input v-model="ruleForm.name" placeholder="请输入名称"></el-input>
+        <el-input v-model="ruleForm.userName" placeholder="请输入登录使用的用户名"></el-input>
       </el-form-item>
 	  <el-form-item label="昵称：" prop="nickName">
 	    <el-input v-model="ruleForm.nickName" placeholder="请输入昵称"></el-input>
 	  </el-form-item>
+	  <el-form-item label="密码：" prop="userPassword">
+	    <el-input v-model="ruleForm.userPassword" placeholder="请输入密码"></el-input>
+	  </el-form-item>
 	  
-	  <el-form-item prop="ruleForm.status" label="状态" align="center">
+	  <el-form-item prop="ruleForm.userStatus" label="状态" align="center">
 	    <template #default="scope">
-	      <span class="statusName">{{ ruleForm.status === 1 ? "启用" : "禁用" }}</span>
+	      <span class="statusName">{{ ruleForm.userStatus === 1 ? "启用" : "禁用" }}</span>
 	      <el-switch
-	        v-model="ruleForm.status"
+	        v-model="ruleForm.userStatus"
 	        active-color="#13ce66"
 	        inactive-color="#ff4949"
 	        :active-value="1"
@@ -22,8 +25,8 @@
 	    </template>
 	  </el-form-item>
 
-		<el-form-item label="角色类别：" prop="role">
-		  <el-select v-model="ruleForm.role" placeholder="请选择" clearable>
+		<el-form-item label="角色：" prop="roleId">
+		  <el-select v-model="ruleForm.roleId" placeholder="请选择" clearable>
 				<el-option
 					v-for="item in options"
 					:key="item.value"
@@ -60,29 +63,32 @@ export default defineComponent({
   setup(props, ctx) {
 	console.log("传入参数",props);
     let ruleForm = reactive({
-		id:'',
-      name: '',
-	  nickName:'',
-	  role:'',
-	  status:''
+		"userId": "",
+		"userName": "",
+		"nickName": "",
+		"userStatus": 0,
+		"roleId":1,
+		"userPassword":""
     })
 	
 	if (props.layer.row) {
-		ruleForm.id = props.layer.row.id;
-		ruleForm.name = props.layer.row.name;
+		ruleForm.userId = props.layer.row.id;
+		ruleForm.userName = props.layer.row.userName;
 		ruleForm.nickName = props.layer.row.nickName;
-		ruleForm.role = props.layer.row.role;
-		ruleForm.status = props.layer.row.status;
+		ruleForm.roleId = props.layer.row.roleId;
+		ruleForm.userStatus = props.layer.row.userStatus;
+		ruleForm.userPassword = props.layer.row.userPassword;
 	} 
 	
     const rules = {
-      name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+      userName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
       nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-      role: [{ required: true, message: '请选择用户角色', trigger: 'blur' }]
+      roleId: [{ required: true, message: '请选择用户角色', trigger: 'blur' }],
+	  userPassword:[{ required: true, message: '请输入密码', trigger: 'blur' }]
     }
 
 	const options =[
-		{label:'AA',value:1},{label:'BB',value:2}
+		{label:'工作人员',value:1},{label:'管理员',value:2}
 	];
 
     return {
@@ -97,7 +103,7 @@ export default defineComponent({
         if (valid) {
           let params = this.ruleForm
           if (this.layer.row) {
-			params.id = this.layer.row.id;
+			params.userId = this.layer.row.userId;
             this.updateForm(params)
           } else {
             this.addForm(params)

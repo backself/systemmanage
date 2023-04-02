@@ -20,7 +20,7 @@ const data = {
 
 export default [
   {
-    url: `/mock/product/query/list`,
+    url: `/mock/products/query`,
     method: 'post',
     response: ({ body }) => {
       const { page, pageSize } = body
@@ -32,7 +32,7 @@ export default [
     }
   },
   {
-    url: `/mock/product/query/add`,
+    url: `/mock/products/query/add`,
     method: 'post',
     response: ({ body }) => {
       return {
@@ -43,7 +43,7 @@ export default [
     }
   },
   {
-    url: `/mock/product/query/update`,
+    url: `/mock/products/query/update`,
     method: 'post',
     response: ({ body }) => {
 		return {

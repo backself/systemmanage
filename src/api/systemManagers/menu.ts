@@ -1,9 +1,9 @@
 import request from '@/utils/system/request'
 
 // 获取当前用户下所有可使用的菜单列表(包括链接类型)
-export function getData(data: object) {
+export function getLinkListData(data: object) {
   return request({
-    url: '/auth/menu/all/list',
+    url: '/systemManage/urls/all/list',
     method: 'post',
     baseURL: '/mock',
     data
@@ -13,7 +13,7 @@ export function getData(data: object) {
 // 获取当前用户下所有可使用的菜单列表(不包括链接类型)
 export function getMenuData(data: object) {
   return request({
-    url: 'auth/menu/menu/list',
+    url: '/systemManage/urls/nav/list',
     method: 'post',
     baseURL: '/mock',
     data
@@ -23,7 +23,7 @@ export function getMenuData(data: object) {
 // 新增
 export function add(data: object) {
   return request({
-    url: 'auth/menu/add',
+    url: '/systemManage/urls/add',
     method: 'post',
     baseURL: '/mock',
     data
@@ -33,7 +33,7 @@ export function add(data: object) {
 // 编辑
 export function update(data: object) {
   return request({
-    url: 'auth/menu/update',
+    url: '/systemManage/urls/update',
     method: 'post',
     baseURL: '/mock',
     data
@@ -43,7 +43,7 @@ export function update(data: object) {
 // 删除
 export function del(data: object) {
   return request({
-    url: 'auth/menu/del',
+    url: '/systemManage/urls/del',
     method: 'post',
     baseURL: '/mock',
     data

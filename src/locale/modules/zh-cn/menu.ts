@@ -27,7 +27,7 @@ export default {
     }, 
     systemManage: {
       name: '系统管理',
-      menu: '菜单',
+      menu: '菜单管理',
       role: '角色菜单关系管理',
       user: '用户管理'
     }

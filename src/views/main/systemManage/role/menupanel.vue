@@ -31,7 +31,7 @@
 <script lang="ts">
 import type { Ref } from "vue";
 import { defineComponent, ref, inject, nextTick,watch } from "vue";
-import { getMenuPanelListApi,savePanelListApi } from "@/api/systemManagers/role";
+import { getUrlPanelListApi,savePanelApi } from "@/api/systemManagers/role";
 import { ElMessage } from 'element-plus'
 export default defineComponent({
   setup() {
@@ -46,30 +46,29 @@ export default defineComponent({
 	console.log(active);
     const getMenuPanelListData = () => {
       let params = {};
-      getMenuPanelListApi(params).then((res) => {
+      getUrlPanelListApi(params).then((res) => {
         data.value = res.data;
         nextTick(() => {
-			tree.value &&tree.value.setCheckedKeys(active.value.urlList);
+			tree.value &&tree.value.setCheckedKeys(active.value.urlIds);
         })
       });
     };
 	
 	const saveCurrentCheckedKeysToCurrentCheckedRole = function(){
-		console.log("当前角色",active.value.authId,",的关联菜单列表为",tree.value.getCheckedKeys());
+		console.log("当前角色",active.value.roleId,",的关联菜单列表为",tree.value.getCheckedKeys());
 		let params = {
-			authId:active.value.authId,
-			menuIds:tree.value.getCheckedKeys()
+			roleId:active.value.authId,
+			urlIds:tree.value.getCheckedKeys()
 		};
-		savePanelListApi(params).then((res)=>{
+		savePanelApi(params).then((res)=>{
 			ElMessage({
 			  type: 'success',
 			  message: '保存成功！'
-			})
+			});
 			location.reload();
 		})
 	}
 	
-    getMenuPanelListData();
     watch(active,(newV,oldV)=>{
 		console.log(newV)
 		// console.log(oldV)

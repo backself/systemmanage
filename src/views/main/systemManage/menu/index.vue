@@ -15,22 +15,23 @@
       <el-tree
         ref="tree"
         class="my-tree"
-        :data="routes"
+        :data="treeData"
         :props="defaultProps"
+		:check-strictly=true
         node-key="id"
         highlight-current
         default-expand-all
-		:show-checkbox=true
+		:show-checkbox="true"
       >
         <template #default="{ node, data }">
           <div class="custom-tree-node" @click="show(node, data)">
-            <span v-if="data.meta">{{ $t(data.meta.title) }}</span>
+            <span v-if="data.urlName">{{ $t(data.urlName) }}</span>
           </div>
         </template>
       </el-tree>
     </div>
   </div>
-  <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
+  <Layer :layer="layer" @updateLinkListData="initLinkListData" v-if="layer.show" />
 </template>
 
 <script lang="ts">
@@ -40,7 +41,9 @@ import { useRouter } from "vue-router";
 import Layer from './layer.vue'
 import { Plus, Delete } from '@element-plus/icons'
 import {ElMessage}from "element-plus"
-import {getData,del} from "@/api/systemManagers/menu"
+import {getLinkListData,del} from "@/api/systemManagers/menu"
+
+import {list_param,url_del} from "./params"
 
 export default defineComponent({
 	components: {
@@ -49,43 +52,41 @@ export default defineComponent({
   setup() {
 	const tree: Ref<any|null> = ref(null);
     const defaultProps = {
-      children: "children",
-      label: "path",
+      children: "childs",
+      label: "urlName",
     };
     const router = useRouter();
     console.log(router);
     const routes = router.options.routes;
     console.log(routes);
     const show = (node: any, data: any) => {
-      console.log("标题",node.data.meta.title);
+      console.log("标题",node.data);
       console.log(data);
     };
-	const data = ref([]);
+	const treeData = ref([]);
 	const layer = reactive({
 	  show: false,
 	  title: '新增',
-	  menuId:'',
 	  showButton: true
 	})
 	const loading = ref(true)
 	// 获取表格数据
 	// params <init> Boolean ，默认为false，用于判断是否需要初始化分页
-	const getTableData = () => {
+	const initLinkListData = () => {
 	  loading.value = true
-	  let params = {
-		  
-	  }
-	  getData(params).then(function(res){
-		  data.value = res.data;
+	  let params = list_param;
+	  getLinkListData(params).then(function(res){
+		  treeData.value = res.data;
+		  console.log(treeData);
 	  });
 	}
 	
 	const handleEdit = function(){
-		
+	
 		if(tree.value.getCheckedKeys().length == 1){
 			layer.title = '编辑数据';
 			layer.show = true;
-			layer.menuId = tree.value.getCurrentKey();
+			layer.url = tree.value.getCheckedNodes()[0];
 		}else{
 			ElMessage({
 				type:"warning",
@@ -96,20 +97,24 @@ export default defineComponent({
 	const handleAdd = function(){
 		layer.title = '新增数据';
 		layer.show = true;
+		layer.url = {};
 	}
 	const handleDel = function(){
-		let params = {
-			menuIds:tree.value.getCheckedKeys()
-		}
+		let params = url_del;
+		params.urlIds = tree.value.getCheckedKeys();
 		del(params).then(function(res){
-				  data.value = res.data;
-				  location.reload();
+			ElMessage({
+				type:"success",
+				message: '删除成功'
+			});
+			location.reload();
 		});
 	}
-	getTableData();
+	initLinkListData();
 	
     return {
 		tree,
+		treeData,
       routes,
       defaultProps,
       show,
@@ -120,7 +125,7 @@ export default defineComponent({
 	  handleDel,
 	  Plus, 
 	  Delete,
-	  getTableData
+	  initLinkListData
     };
   },
 });

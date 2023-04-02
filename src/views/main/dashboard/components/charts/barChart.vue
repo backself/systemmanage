@@ -7,24 +7,28 @@
 <script lang="ts">
 import { defineComponent,ref } from 'vue'
 import Chart from '@/components/charts/index.vue'
-import { getData } from '@/api/dashboard/bar_chart'
+import { getDashboardBarChartData } from '@/api/dashboard/bar_chart'
+import param from './params'
+import defaultOption from './modules/barchartOption'
+import parseDataToChartOption from './modules/parseDashboardChartData'
+
 export default defineComponent({
   components: {
     Chart
   },
   setup() {
-	  let params = {};
 	  let option = ref({});
-	  function initCTableData(params:any){
-		  getData(params).then(function(res:any){
-		  		  option.value = res.data;
+	  function initDashboardBarChartsData(param:any){
+		  getDashboardBarChartData(param).then(function(res:any){
+			option.value = parseDataToChartOption(res.data,defaultOption);
 		  })
 	  }
-	  initCTableData(params);
+	  
+	  initDashboardBarChartsData(param);
 	  
     return {
       option,
-	  initCTableData
+	  initDashboardBarChartsData
     }
   }
 })

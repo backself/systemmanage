@@ -2,11 +2,6 @@
   <div class="category">
     <div class="header-box">
       <h2>角色列表</h2>
-      <!-- <el-input
-        v-model="input"
-        placeholder="请输入内容"
-        @input="searchData(true)"
-      ></el-input> -->
     </div>
     <div class="list system-scrollbar">
       <el-tree
@@ -15,7 +10,7 @@
         :data="data"
         :props="defaultProps"
         :expand-on-click-node="false"
-        node-key="authId"
+        node-key="roleId"
         highlight-current
         default-expand-all
         @node-click="handleNodeClick"
@@ -34,7 +29,7 @@ export default defineComponent({
     const tree: Ref<any|null> = ref(null)
     const defaultProps = {
       children: "childs",
-      label: "authName",
+      label: "roleName",
     };
     const active: any = inject("active");
     const getRolePanelListData = () => {
@@ -43,7 +38,7 @@ export default defineComponent({
         data.value = res.data;
         active.value = res.data[0];
         nextTick(() => {
-          tree.value && tree.value.setCurrentKey(active.value.authId)
+          tree.value && tree.value.setCurrentKey(active.value.roleId)
         })
       });
     };

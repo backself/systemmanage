@@ -8,6 +8,10 @@
 import { defineComponent,ref } from 'vue'
 import {getOnlineData} from "@/api/dashboard/online"
 import Row from './row.vue'
+
+import param from './params'
+import defaultData from './modules/defaultData'
+
 export default defineComponent({
   components: {
     Row
@@ -17,9 +21,11 @@ export default defineComponent({
     let list = ref([]);
 	
 	function initOnline(){
-		let params = {};
-		getOnlineData(params).then(function(res){
-			list.value = res.data;
+		getOnlineData(param).then(function(res){
+			for (var i = 0; i < defaultData.length; i++) {
+				defaultData[i].data = res.data[i];
+			}
+			list.value = defaultData;
 		});
 	}
 	initOnline();

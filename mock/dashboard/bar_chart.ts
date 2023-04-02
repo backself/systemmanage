@@ -5,8 +5,8 @@ import option from './mockmodules/bar_chart'
 */
 export default [
   {
-    url: `/mock/dashboard/bar_chart/list`,
-    method: 'post',
+    url: `/mock/dashboard/report/get`,
+    method: 'get',
     response: ({ body }) => {
       return {
         code: 200,

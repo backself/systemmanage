@@ -1,6 +1,6 @@
 import request from '@/utils/system/request'
 
-export function getData(data: object) {
+export function getUserListData(data: object) {
   return request({
     url: '/auth/user/list',
     method: 'post',

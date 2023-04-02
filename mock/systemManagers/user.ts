@@ -4,31 +4,34 @@ export default [
     url: '/mock/auth/user/list',
     method: 'post',
     response: ({ body }) => {
-      const { page, pageSize } = body
+      const { pageIndex, pageSize,totalPage } = body
       return {
         code: 200,
         data: {
           list: [{
-			"id": 1,
-			"name": "Sharon Jackson",
+			"userId": 1,
+			"userName": "Sharon Jackson",
 			"nickName": "赵丽",
-			"status": 1,
-			"role": 1,
-			"isAdmin": 1
+			"userStatus": 1,
+			"roleId":1,
+			"roleName": "工作人员",
+			"parentUserId":0,
+			"userPassword":"123456"
 		},{
-			"id": 2,
-			"name": "Sharon Jackson",
+			"userId": 2,
+			"userName": "Sharon Jackson",
 			"nickName": "赵丽",
-			"status": 1,
-			"role": 1,
-			"isAdmin": 1
+			"userStatus": 1,
+			"roleId":1,
+			"roleName": "工作人员",
+			"parentUserId":0,
+			"userPassword":"123456"
 		}
 		],
-          pager: {
-            page: page,
-            pageSize: pageSize,
-            total: 1
-          }
+		pageIndex: pageIndex,
+		pageSize: pageSize,
+		totalPage:totalPage,
+		total: 2
         },
         msg: ''
       };
