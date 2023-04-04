@@ -43,6 +43,8 @@ import { Plus, Delete } from '@element-plus/icons'
 import {ElMessage}from "element-plus"
 import {getLinkListData,del} from "@/api/systemManagers/menu"
 
+import axios from 'axios'
+
 import {list_param,url_del} from "./params"
 
 export default defineComponent({
@@ -111,6 +113,12 @@ export default defineComponent({
 		});
 	}
 	initLinkListData();
+	
+	axios.post("http://localhost:8005/pay/1",{
+		a:1
+	}).then(function(res){
+		console.log(res);
+	});
 	
     return {
 		tree,
