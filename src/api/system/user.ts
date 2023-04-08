@@ -3,9 +3,8 @@ import request from '@/utils/system/request'
 // 获取数据api
 export function getData(data: object) {
   return request({
-    url: '/system/user/list',
+    url: '/users/list',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
@@ -13,9 +12,8 @@ export function getData(data: object) {
 // 新增
 export function add(data: object) {
   return request({
-    url: '/system/user/add',
+    url: '/users/add',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
@@ -23,9 +21,8 @@ export function add(data: object) {
 // 编辑
 export function update(data: object) {
   return request({
-    url: '/system/user/update',
+    url: '/users/update',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
@@ -33,9 +30,8 @@ export function update(data: object) {
 // 状态变更
 export function updateStatus(data: object) {
   return request({
-    url: '/system/user/updateStatus',
+    url: '/users/updateStatus',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
@@ -43,9 +39,8 @@ export function updateStatus(data: object) {
 // 删除
 export function del(data: object) {
   return request({
-    url: '/system/user/del',
+    url: '/users/del',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }

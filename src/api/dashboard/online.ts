@@ -5,7 +5,6 @@ export function getOnlineData(params: object) {
   return request({
     url: '/dashboard/online',
     method: 'post',
-    baseURL: '/mock',
     params
   })
 }

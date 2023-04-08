@@ -36,7 +36,7 @@ export default [
     }
   },
   {
-    url: `/mock/user/info`,
+    url: `/mock/users/info`,
     method: 'post',
     response: ({ body }) => {
       const { token } = body
@@ -71,15 +71,5 @@ export default [
       };
     }
   },
-  {
-    url: `/mock/user/update`,
-    method: 'post',
-    response: () => {
-      return {
-        code: 200,
-        data: {},
-        msg: 'success'
-      };
-    }
-  },
+
 ] as MockMethod[]

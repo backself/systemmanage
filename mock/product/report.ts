@@ -31,7 +31,7 @@ const data = {
 
 export default [
   {
-    url: `/mock/product/report/get`,
+    url: `/mock/reports/get`,
     method: 'post',
     response: ({ body }) => {
       const { page, pageSize } = body
@@ -43,7 +43,7 @@ export default [
     }
   },
   {
-    url: `/mock/product/query/add`,
+    url: `/mock/products/add`,
     method: 'post',
     response: ({ body }) => {
       return {

@@ -1,7 +1,7 @@
 
 export default [
   {
-    url: '/mock/auth/user/list',
+    url: '/mock/users/list',
     method: 'post',
     response: ({ body }) => {
       const { pageIndex, pageSize,totalPage } = body
@@ -38,7 +38,7 @@ export default [
     }
   },
   {
-    url: `/mock/auth/user/add`,
+    url: `/mock/users/add`,
     method: 'post',
     response: ({ body }) => {
       return {
@@ -49,7 +49,7 @@ export default [
     }
   },
   {
-    url: `/mock/auth/user/update`,
+    url: `/mock/users/update`,
     method: 'post',
     response: ({ body }) => {
       return {
@@ -60,7 +60,7 @@ export default [
     }
   },
   {
-    url: `/mock/auth/user/del`,
+    url: `/mock/users/del`,
     method: 'post',
     response: ({ body }) => {
       return {

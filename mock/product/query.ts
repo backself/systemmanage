@@ -32,7 +32,7 @@ export default [
     }
   },
   {
-    url: `/mock/products/query/add`,
+    url: `/mock/products/add`,
     method: 'post',
     response: ({ body }) => {
       return {
@@ -43,7 +43,7 @@ export default [
     }
   },
   {
-    url: `/mock/products/query/update`,
+    url: `/mock/products/update`,
     method: 'post',
     response: ({ body }) => {
 		return {
@@ -54,7 +54,7 @@ export default [
     }
   },
   {
-    url: `/mock/product/query/del`,
+    url: `/mock/products/del`,
     method: 'post',
     response: ({ body }) => {
       return {

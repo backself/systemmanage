@@ -2,36 +2,32 @@ import request from '@/utils/system/request'
 
 export function getUserListData(data: object) {
   return request({
-    url: '/auth/user/list',
+    url: '/users/list',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
 // 新增
 export function add(data: object) {
   return request({
-    url: '/auth/user/add',
+    url: '/users/add',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
 
 export function update(data: object) {
   return request({
-    url: '/auth/user/update',
+    url: '/users/update',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
 
 export function del(data: object) {
   return request({
-    url: '/auth/user/del',
+    url: '/users/del',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }

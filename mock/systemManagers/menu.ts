@@ -4,7 +4,7 @@ import {menupanel_list_data} from "./modules/role_menu_panel"
 export default [
 	/** 需要展示的菜单模拟接口 */
 	{
-		url: `/mock/systemManage/urls/all/list`,
+		url: `/mock/urls/all/list`,
 		method: 'post',
 		response: ({ body }) => {
 			return {
@@ -14,7 +14,7 @@ export default [
 		}
 	},
 	{
-		url: `/mock/systemManage/urls/nav/list`,
+		url: `/mock/urls/nav/list`,
 		method: 'post',
 		response: ({ body }) => {
 			return {
@@ -24,7 +24,7 @@ export default [
 		}
 	},
 	{
-		url: `/mock/systemManage/urls/add`,
+		url: `/mock/urls/add`,
 		method: 'post',
 		response: ({ body }) => {
 			return {
@@ -35,7 +35,7 @@ export default [
 		}
 	},
 	{
-		url: `/mock/systemManage/urls/update`,
+		url: `/mock/urls/update`,
 		method: 'post',
 		response: ({ body }) => {
 			return {
@@ -46,7 +46,7 @@ export default [
 		}
 	},
 	{
-		url: `/mock/systemManage/urls/del`,
+		url: `/mock/urls/del`,
 		method: 'post',
 		response: ({ body }) => {
 			return {

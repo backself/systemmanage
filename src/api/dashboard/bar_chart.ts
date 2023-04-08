@@ -5,7 +5,6 @@ export function getDashboardBarChartData(params: object) {
   return request({
     url: '/dashboard/report/get',
     method: 'get',
-    baseURL: '/mock',
     params
   })
 }

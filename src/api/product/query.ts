@@ -35,7 +35,6 @@ export function del(data: object) {
   return request({
     url: '/products/del',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
