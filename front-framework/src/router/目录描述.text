@@ -1,0 +1,9 @@
+路由保存目录
+./modules --> 表示项目中各个模块使用的路由配置文件
+createNode.ts --> 包含一个方法 createNameComponent
+					-- 在路由目的地加载后动态创建一个组件添加到路由模板中的方法
+index.ts --> 路由配置拦截器
+index.type.ts --> 路由配置属性构造文件
+
+permission.ts --> 引入需要权限判定的路由配置文件
+reload.vue --> 重新加载路由使用的试图
