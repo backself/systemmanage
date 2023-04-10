@@ -1,0 +1,51 @@
+HELP.md
+target/
+#################################
+# 注释掉原文件以下配置
+# !.mvn/wrapper/maven-wrapper.jar
+#!**/src/main/**/target/
+#!**/src/test/**/target/
+#############################
+
+#################################
+# 增加的文件文件配置
+.mvn/
+**/src/main/**/target/
+**/src/test/**/target/
+mvnw
+mvnw.cmd
+**.iml
+/**/.iml
+.idea/**
+**.log
+work/**
+#############################
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

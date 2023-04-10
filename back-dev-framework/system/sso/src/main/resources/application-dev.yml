@@ -1,0 +1,30 @@
+jwt:
+  secret-key: 111111
+  duration-in-minute: 14000
+# 配置数据库链接
+spring:
+  application:
+    name: nacos-sys-sso
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    # 数据库连接池使用durid
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 数据库版本高于6.0以上时使用下列代码
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库版本低于6.0时使用下列代码
+    # driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testall?useUnicode=true&characterEncoding=utf8
+    username: root
+    password:
+
+dubbo:
+  protocol:
+    port: -1
+    name: dubbo
+  consumer:
+    check: false
+  registry:
+    address: nacos://localhost:8848

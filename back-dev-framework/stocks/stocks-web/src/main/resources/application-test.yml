@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: nacos-stocks
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 176.223.7.13:8848
+  datasource:
+    # 数据库连接池使用durid
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 数据库版本高于6.0以上时使用下列代码
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库版本低于6.0时使用下列代码
+    # driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testall?useUnicode=true&characterEncoding=utf8
+    username: testall
+    password: testall
+
+dubbo:
+  protocol:
+    port: -1
+    name: dubbo
+  consumer:
+    check: false
+  registry:
+    address: nacos://176.223.7.13:8848
+
+# rocketMQ配置
+rocketmq:
+  name-server: 176.223.7.13:9876 # 配置rocketMQ端口
+  producer: # 生产者配置
+    group: message_publish # 生产者组名
+    max-message-size: 131072 # 最大消息体积
+    send-message-timeout: 3000 # 发送消息超时时间

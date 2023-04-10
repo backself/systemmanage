@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="os.g.zone.products.web.mappers.ProductMapper">
+
+    <select id="listAllProductByPage" resultType="ProductInfoBO">
+        SELECT product_id,product_name, product_create_time, product_status,
+               product_repertories,product_common_level,product_type,
+               product_spec_level,product_is_del,product_modified_time
+        FROM product_info
+    </select>
+
+</mapper>

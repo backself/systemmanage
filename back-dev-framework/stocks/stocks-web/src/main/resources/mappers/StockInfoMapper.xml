@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="os.g.zone.stocks.web.mappers.StockInfoMapper">
+
+    <resultMap id="BaseResultMap" type="os.g.zone.stocks.web.pojo.entitys.StockInfo">
+            <id property="productId" column="product_id" jdbcType="OTHER"/>
+            <result property="productName" column="product_name" jdbcType="VARCHAR"/>
+            <result property="productCreateTime" column="product_create_time" jdbcType="TIMESTAMP"/>
+            <result property="productStatus" column="product_status" jdbcType="INTEGER"/>
+            <result property="productRepertories" column="product_repertories" jdbcType="INTEGER"/>
+            <result property="productCommonLevel" column="product_common_level" jdbcType="INTEGER"/>
+            <result property="productType" column="product_type" jdbcType="INTEGER"/>
+            <result property="productSpecLevel" column="product_spec_level" jdbcType="INTEGER"/>
+            <result property="productModifiedTime" column="product_modified_time" jdbcType="TIMESTAMP"/>
+            <result property="productIsDel" column="product_is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        product_id,product_name,product_create_time,
+        product_status,product_repertories,product_common_level,
+        product_type,product_spec_level,product_modified_time,
+        product_is_del
+    </sql>
+    <update id="changeProductStockById" parameterType="os.g.zone.stocks.web.pojo.po.ChangeStockPO">
+        UPDATE product_info
+        <set>
+            <if test="changeType == 0">
+                product_repertories = product_repertories - #{count}
+            </if>
+            <if test="changeType == 1">
+                product_repertories = product_repertories + #{count}
+            </if>
+        </set>
+        WHERE product_id = #{productId} and product_repertories>#{count}
+    </update>
+
+</mapper>

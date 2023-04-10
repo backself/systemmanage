@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="os.g.zone.sys.roles.web.mappers.SystemRoleUrlTempMapper">
+
+    <resultMap id="BaseResultMap" type="os.g.zone.sys.roles.web.pojo.entitys.SystemRoleUrlTemp">
+            <id property="tempId" column="temp_id" jdbcType="INTEGER"/>
+            <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+            <result property="urlId" column="url_id" jdbcType="INTEGER"/>
+            <result property="tempStatus" column="temp_status" jdbcType="INTEGER"/>
+            <result property="tempReason" column="temp_reason" jdbcType="VARCHAR"/>
+            <result property="tempCreateTime" column="temp_create_time" jdbcType="TIMESTAMP"/>
+            <result property="tempModifiedTime" column="temp_modified_time" jdbcType="TIMESTAMP"/>
+            <result property="tempIsDel" column="temp_is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        temp_id,role_id,url_id,
+        temp_status,temp_reason,temp_create_time,
+        temp_modified_time,temp_is_del
+    </sql>
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO system_url (
+        urlId,urlName,urlLink,urlStatus,childId,parentId,urlType,urlCommonLevel
+        ,urlMatchType,urlSpecLevel,urlIsDel
+        ) VALUES
+        <foreach collection="list" item="admin" separator=",">
+            (
+            #{admin.url_id}, #{admin.url_name}, #{admin.url_link}, #{admin.url_status}, #{admin.child_id},
+            #{admin.parent_id}, #{admin.url_type}, #{admin.url_common_level}, #{admin.url_match_type},
+            #{admin.url_spec_level},#{admin.url_is_del}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectUrlRoleById" resultMap="roleUrlTempResultMap">
+        SELECT
+            r.role_id,r.role_name,
+            r_u_t.url_id
+        FROM
+            system_role r
+                LEFT JOIN
+            system_role_url_temp r_u_t ON r.role_id = r_u_t.role_id
+        WHERE r.role_id = #{role_id}
+    </select>
+
+    <resultMap id="roleUrlTempResultMap" type="os.g.zone.sys.roles.web.pojo.bo.SystemRoleUrlTempBO">
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <collection property="urlIds" column="url_id" ofType="java.lang.Long" >
+            <result column="url_id"/>
+        </collection>
+    </resultMap>
+
+</mapper>

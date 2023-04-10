@@ -1,0 +1,8 @@
+# 配置数据库链接
+spring:
+  application:
+    name: nacos-carts
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 176.223.7.13:8848

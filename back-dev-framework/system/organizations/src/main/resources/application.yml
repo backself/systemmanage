@@ -1,0 +1,5 @@
+# 配置项目启动端口
+server:
+  port: 8019
+  servlet:
+    context-path: /organizations # 配置访问根路径

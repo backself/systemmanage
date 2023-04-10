@@ -1,0 +1,8 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /expresses
+
+spring:
+  profiles:
+    active: test

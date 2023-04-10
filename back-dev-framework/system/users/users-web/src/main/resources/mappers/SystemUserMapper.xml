@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="os.g.zone.sys.users.web.mappers.SystemUserMapper">
+
+    <resultMap id="BaseResultMap" type="os.g.zone.sys.users.web.pojo.entitys.SystemUser">
+            <id property="userId" column="user_id" jdbcType="OTHER"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
+            <result property="userStatus" column="user_status" jdbcType="INTEGER"/>
+            <result property="userCreateTime" column="user_create_time" jdbcType="TIMESTAMP"/>
+            <result property="parentUserId" column="parent_user_id" jdbcType="INTEGER"/>
+            <result property="userModifiedTime" column="user_modified_time" jdbcType="TIMESTAMP"/>
+            <result property="userIsDel" column="user_is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,user_name,nick_name,
+        user_password,user_status,user_create_time,
+        parent_user_id,user_modified_time,user_is_del
+    </sql>
+    <select id="listAllSystemUserByPage" resultType="os.g.zone.sys.users.web.pojo.bo.SystemUserBO">
+        select <include refid="Base_Column_List"></include>
+        from system_user
+        where
+            nick_name like CONCAT(CONCAT("%",#{systemUserPO.nickName}),"%")
+    </select>
+    <select id="countByName" resultType="java.lang.Integer" >
+        SELECT count(*) FROM system_user WHERE user_name=#{user_name}
+    </select>
+    <select id="getLoginInfoByUsername" resultMap="UserInfoResultMap">
+        SELECT
+            users.user_id,users.user_name,users.nick_name,users.user_password,
+            r.role_id,r.role_name
+        FROM
+            system_user users
+                LEFT JOIN system_user_role_temp u_r_t ON users.user_id = u_r_t.user_id
+                LEFT JOIN system_role r ON u_r_t.role_id = r.role_id
+        WHERE
+            users.user_name = #{userName};
+    </select>
+
+    <resultMap id="UserInfoResultMap" type="os.g.zone.sys.users.web.pojo.bo.SystemUserLoginInfoBO">
+        <id property="userId" column="user_id" jdbcType="OTHER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
+        <collection property="permissions" ofType="java.util.HashMap" column="role_id">
+        </collection>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,9 @@
+# 配置项目启动端口
+server:
+  port: 8005
+  servlet:
+    context-path: /pay # 配置访问根路径
+
+spring:
+  profiles:
+    active: test

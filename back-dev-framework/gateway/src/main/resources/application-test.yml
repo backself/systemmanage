@@ -1,0 +1,96 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 176.223.7.13:8848
+    gateway:
+      routes:
+        - id: gateway-expresses-web
+          uri: lb://nacos-expresses
+          predicates:
+            - Path=/back-sys/expresses/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-messages
+          uri: lb://nacos-messages
+          predicates:
+            - Path=/back-sys/messages/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-msg-task-web
+          uri: lb://nacos-msg-task-web
+          predicates:
+            - Path=/back-sys/msg-task/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-orders
+          uri: lb://nacos-orders
+          predicates:
+            - Path=/back-sys/orders/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-pay
+          uri: lb://nacos-pay
+          predicates:
+            - Path=/back-sys/pay/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-products-web
+          uri: lb://nacos-products-web
+          predicates:
+            - Path=/back-sys/products/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-reports-web
+          uri: lb://nacos-reports-web
+          predicates:
+            - Path=/back-sys/reports/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-stocks
+          uri: lb://nacos-stocks
+          predicates:
+            - Path=/back-sys/stocks/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-organizations
+          uri: lb://nacos-organizations
+          predicates:
+            - Path=/back-sys/organizations/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-roles
+          uri: lb://nacos-sys-roles
+          predicates:
+            - Path=/back-sys/roles/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-urls
+          uri: lb://nacos-sys-urls
+          predicates:
+            - Path=/back-sys/urls/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-urls
+          uri: lb://nacos-sys-users
+          predicates:
+            - Path=/back-sys/users/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+    main:
+      # 防止SpringMVC和SpringGateway依赖冲突的配置
+      web-application-type: reactive

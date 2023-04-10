@@ -1,0 +1,8 @@
+# 配置数据库链接
+spring:
+  application:
+    name: nacos-expresses
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848

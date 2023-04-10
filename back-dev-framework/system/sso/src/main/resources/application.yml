@@ -1,0 +1,11 @@
+# 配置项目启动端口
+server:
+  port: 8018
+  servlet:
+    context-path: /auth # 配置访问根路径
+spring:
+  profiles:
+    active: dev
+logging:
+  level:
+    os.g.zone: debug
