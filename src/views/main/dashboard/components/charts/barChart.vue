@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent,ref } from 'vue'
 import Chart from '@/components/charts/index.vue'
-import { getDashboardBarChartData } from '@/api/dashboard/bar_chart'
+import { creatWS, getDashboardBarChartData } from '@/api/dashboard/bar_chart'
 import param from './params'
 import defaultOption from './modules/barchartOption'
 import parseDataToChartOption from './modules/parseDashboardChartData'
@@ -17,6 +17,18 @@ export default defineComponent({
     Chart
   },
   setup() {
+	  
+	  let wsUrl = "";
+	  let wsInstance = creatWS(wsUrl);
+	  wsInstance.onopen = function(evt){
+		  console.log("Connection is opening ..."); 
+	  }
+	  wsInstance.onmessage  = function(evt){
+			console.log("Connection is recive ...",evt.data); 
+	  }
+	  wsInstance.onclose = function(evt){
+	  		  console.log("Connection is close ..."); 
+	  }
 	  let option = ref({});
 	  function initDashboardBarChartsData(param:any){
 		  getDashboardBarChartData(param).then(function(res:any){

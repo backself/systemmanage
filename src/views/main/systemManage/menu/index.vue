@@ -114,12 +114,6 @@ export default defineComponent({
 	}
 	initLinkListData();
 	
-	axios.post("http://localhost:8005/pay/1",{
-		a:1
-	}).then(function(res){
-		console.log(res);
-	});
-	
     return {
 		tree,
 		treeData,

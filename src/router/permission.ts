@@ -13,8 +13,7 @@ import {getMenuData} from "@/api/systemManagers/menu"
 import Dashboard from './modules/dashboard'
 import Products from './modules/products'
 import SystemManage from './modules/systemManage'
-import {parseDataToRouter} from "./parseRouterUtil"
-import {test} from "./parseDataUtil"
+import {parseDataToRouter} from "./parseToRouterUtil"
 
 /** 登录后需要动态加入的本地路由 */
 const asyncRoutes: Route[] = [
@@ -31,8 +30,8 @@ async function addRoutes() {
   // 已验证完成，下面代码添加的可以实时同步至菜单中去，可以添加setTimeout(() => {}) 模拟异步代码的操作
   // 利用前端路由表模拟后端数据问题
   return new Promise<void>((resolve) => {
-	  test();
 	  getMenuData({}).then(function(res){
+		  // console.log(res)
 		  let data_temp = JSON.parse(JSON.stringify(res.data));
 		  let resoult = parseDataToRouter(res.data,0);
 		  console.log("首页路由配置详细：",Dashboard);

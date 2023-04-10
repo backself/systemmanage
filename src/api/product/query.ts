@@ -5,7 +5,6 @@ export function getData(data: object) {
   return request({
     url: '/products/query',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
@@ -15,7 +14,6 @@ export function add(data: object) {
   return request({
     url: '/products/add',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
@@ -25,7 +23,6 @@ export function update(data: object) {
   return request({
     url: '/products/update',
     method: 'post',
-    baseURL: '/mock',
     data
   })
 }
