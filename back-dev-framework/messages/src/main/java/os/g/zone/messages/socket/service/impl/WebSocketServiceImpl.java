@@ -1,5 +1,6 @@
 package os.g.zone.messages.socket.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,23 +30,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         boolean tmp = containtSocketSessionFromRedis(userId);
         if(tmp){
             log.debug("用户{}已在线。",userId);
-            try {
-                session.getBasicRemote().sendText("您已在其他设备登录,此处将收不到消息");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
             return 0;
         }
 
         String key = UsersOnlineRedisEnum.USER_LOGIN.getKey();
         redisTemplate.opsForHash().put(key,String.valueOf(userId),session.getId());
         log.debug("用户{}上线。",userId);
-        try {
-            session.getBasicRemote().sendText("您已上线");
-            session.getBasicRemote().sendText("当前在线人数："+countAllUsersFromRedis());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         // 保存到map缓存中
         onlineUsers.put(userId,session);
         return 0;
@@ -99,10 +89,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     public int sendToAllMessage(BCMessageVO bcMessageVO) {
-
+        String message = JSONObject.toJSONString(bcMessageVO);
         for (Map.Entry<String, Session> entry : onlineUsers.entrySet()) {
             try {
-                 entry.getValue().getBasicRemote().sendText(bcMessageVO.toString());
+                 entry.getValue().getBasicRemote().sendText(message);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

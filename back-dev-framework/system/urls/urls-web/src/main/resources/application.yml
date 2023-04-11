@@ -5,7 +5,7 @@ server:
     context-path: /urls # 配置访问根路径
 spring:
   profiles:
-    active: dev
+    active: test
 
 # mybatis-plus相关配置
 mybatis-plus:

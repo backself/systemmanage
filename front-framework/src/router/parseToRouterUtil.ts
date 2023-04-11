@@ -12,7 +12,7 @@ export function parseDataToRouter(data : any, type : number) {
 			meta: {},
 		};
 		
-		let routConfig = item.urlLink;
+		let routConfig = JSON.parse(item.urlLink);
 		let routChildren = item.childs;
 
 		tempData.path = routConfig.path;

@@ -8,9 +8,3 @@ export function getDashboardBarChartData(params : object) {
 		params
 	})
 }
-
-export function creatWS(wsUrl:String|URL) {
-	return new WebSocket(
-		wsUrl
-	);
-}

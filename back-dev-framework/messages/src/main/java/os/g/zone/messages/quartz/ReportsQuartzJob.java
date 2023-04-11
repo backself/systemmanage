@@ -5,7 +5,11 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import os.g.zone.commons.utils.DateUtils;
+import os.g.zone.messages.commons.DisplayPositionEnum;
+import os.g.zone.messages.socket.service.WebSocketService;
+import os.g.zone.messages.socket.vo.BCMessageVO;
 import os.g.zone.reports.api.dto.ReportsDataDTO;
 import os.g.zone.reports.api.dto.ReportsDataPO;
 import os.g.zone.reports.api.service.ReportsInfoService;
@@ -23,6 +27,8 @@ import java.util.List;
 @Slf4j
 public class ReportsQuartzJob implements Job {
 
+    @Autowired
+    private WebSocketService webSocketService;
     @DubboReference
     private ReportsInfoService dubboReportsInfoService;
     @Override
@@ -35,5 +41,10 @@ public class ReportsQuartzJob implements Job {
         reportsDataPO.setEndTime(new Timestamp(DateUtils.getDayEnd(now).getTime()));
         List<ReportsDataDTO> reportsDataDTO = dubboReportsInfoService.loadReportsData(reportsDataPO);
         log.debug("报表定时任务数据：【{}】",reportsDataDTO);
+        BCMessageVO bcMessageVO = new BCMessageVO<>();
+        bcMessageVO.setDisplayPosition(DisplayPositionEnum.REPORTS.getPosition());
+        bcMessageVO.setContent(reportsDataDTO);
+//        webSocketService.sendToAllMessage(bcMessageVO); // 下发消息
+
     }
 }

@@ -17,9 +17,9 @@ import {parseDataToRouter} from "./parseToRouterUtil"
 
 /** 登录后需要动态加入的本地路由 */
 const asyncRoutes: Route[] = [
-	...Dashboard,
+	// ...Dashboard,
 	// ...Products,
-	...SystemManage,
+	// ...SystemManage,
 ]
 
 /** 

@@ -11,9 +11,7 @@ import store from './store'
 import router from './router'
 import { getAuthRoutes } from './router/permission'
 import i18n from './locale'
-if (import.meta.env.MODE !== 'development') { // 非开发环境调用百度统计
-  baidu()
-}
+
 
 /** 
  * 权限路由处理主方法 

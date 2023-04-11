@@ -26,12 +26,12 @@ public class AddOrdersJob implements Job {
     private IOrderInfoService iOrderInfoService;
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-//        OrderInfoDTO param = new OrderInfoDTO();
-//        param.setConsumerId(1L);
-//        param.setProductId(1L);
-//        Date now = new Date(System.currentTimeMillis());
-//        param.setOrderCreateTime(now);
-//        int res = iOrderInfoService.insertOrder(param);
-//        log.debug("定时增加订单：【{}】",param);
+        OrderInfoDTO param = new OrderInfoDTO();
+        param.setConsumerId(1L);
+        param.setProductId(1L);
+        Date now = new Date(System.currentTimeMillis());
+        param.setOrderCreateTime(now);
+        int res = iOrderInfoService.insertOrder(param);
+        log.debug("定时增加订单：【{}】",param);
     }
 }
