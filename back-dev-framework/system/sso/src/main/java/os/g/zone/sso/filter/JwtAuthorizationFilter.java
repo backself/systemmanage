@@ -3,7 +3,9 @@ package os.g.zone.sso.filter;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,6 +44,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private String secretKey;
     @Value("${jwt.duration-in-minute}")
     private Long durationInMinute;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * JWT的最小长度值
@@ -64,6 +68,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             // 如果JWT无效，直接放行
             log.debug("客户端没有携带有效的JWT，将放行，由后续的过滤器等组件继续处理此请求……");
             filterChain.doFilter(request, response);
+            return;
+        }
+
+        String lockedTokenList="token_list_.lock";
+        Boolean member = stringRedisTemplate.boundSetOps(lockedTokenList).isMember(jwt);
+        if(member){
+            log.info("从redis拿到登录的token:"+jwt);
+            filterChain.doFilter(request, response); // 如果redis中包含的该token那么就不把用户信息放进security context中，让其无法通过登录验证
             return;
         }
 

@@ -9,9 +9,10 @@ package os.g.zone.messages.commons;
  */
 public enum DisplayPositionEnum {
     CARD_ONLINE("1"),
-    CARD_ORDERS("2"),
+    CARD_MSG("2"),
     CARD_STOCKS("3"),
-    REPORTS("4");
+    CARD_ORDERS("4"),
+    REPORTS("5");
     private String position;
     DisplayPositionEnum(String position){
         this.position = position;

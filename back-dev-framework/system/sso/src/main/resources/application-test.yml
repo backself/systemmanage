@@ -1,3 +1,6 @@
+jwt:
+  secret-key: 111111
+  duration-in-minute: 14000
 # 配置数据库链接
 spring:
   application:
@@ -14,8 +17,24 @@ spring:
     # 数据库版本低于6.0时使用下列代码
     # driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/testall?useUnicode=true&characterEncoding=utf8
-    username: root
-    password:
+    username: testall
+    password: testall
+  # redis 配置
+  redis:
+    database: 0     #确定使用库
+    host: 176.223.7.13   #redis服务地址
+    port: 6379        #redis 端口号
+    password:         #redis 密码
+    timeout: 500      # 链接超时时间
+    jedis:
+      pool:
+        max-active: 100 #最大链接数
+        # 最大等待连接超时时间
+        max-wait: -1
+        # 最大维持连接数
+        max-idle: 8
+        # 最小维持连接数
+        min-idle: 0
 dubbo:
   protocol:
     port: -1

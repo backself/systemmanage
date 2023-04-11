@@ -4,6 +4,7 @@ import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import os.g.zone.messages.quartz.MessagesQuartzJob;
 import os.g.zone.messages.quartz.ReportsQuartzJob;
 
 /**
@@ -31,6 +32,26 @@ public class QuartzConfig {
                 .forJob(updateReportsJob())
                 .withSchedule(cron)
                 .withIdentity("updateReportsJobTrigger")
+                .build();
+    }
+
+    @Bean
+    public JobDetail updateMessagesQuartzJob(){
+
+        return JobBuilder.newJob(MessagesQuartzJob.class)
+                .withIdentity("updateMessagesQuartzJob")
+                .storeDurably()
+                .build();
+    }
+
+    @Bean
+    public Trigger updateMessagesQuartzJobTrigger(){
+        CronScheduleBuilder cron=
+                CronScheduleBuilder.cronSchedule("0/1 * * * * ?");
+        return TriggerBuilder.newTrigger()
+                .forJob(updateMessagesQuartzJob())
+                .withSchedule(cron)
+                .withIdentity("updateMessagesQuartzJobTrigger")
                 .build();
     }
 }

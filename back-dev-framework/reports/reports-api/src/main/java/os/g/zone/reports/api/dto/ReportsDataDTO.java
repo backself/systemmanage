@@ -2,6 +2,7 @@ package os.g.zone.reports.api.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
  * @Version 1.0.0
  */
 @Data
-public class ReportsDataDTO {
+public class ReportsDataDTO implements Serializable {
     /**
      * 报表名称
      * @Auther: AA

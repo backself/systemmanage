@@ -32,8 +32,11 @@ public class OrderTaskMsgBroadCastConsumer implements RocketMQListener<String> {
         log.debug("接收到订单广播消息：【{}】=======【{}】=======",QueueMsgTopics.ORDERS,message);
         MessageTaskInfoDTO msg = JSONObject.parseObject(message,MessageTaskInfoDTO.class);
         BCMessageVO wsMsg = new BCMessageVO();
+        JSONObject content = new JSONObject();
         wsMsg.setDisplayPosition(DisplayPositionEnum.CARD_ORDERS.getPosition());
-        wsMsg.setContent(msg.getTaskContent());
+        content.put("count",1);
+        content.put("type",1);
+        wsMsg.setContent(content.toJSONString());
         webSocketService.sendToAllMessage(wsMsg);
     }
 }

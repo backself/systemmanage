@@ -14,8 +14,8 @@ spring:
     # 数据库版本低于6.0时使用下列代码
     # driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/testall?useUnicode=true&characterEncoding=utf8
-    username: root
-    password:
+    username: testall
+    password: testall
 
   # redis 配置
   redis:
@@ -41,3 +41,12 @@ rocketmq:
     group: message_publish # 生产者组名
     max-message-size: 131072 # 最大消息体积
     send-message-timeout: 3000 # 发送消息超时时间
+# dubbo 配置作用是为了标识从哪里取调用的服务
+dubbo:
+  protocol:
+    port: -1
+    name: dubbo
+  consumer:
+    check: false
+  registry:
+    address: nacos://176.223.7.13:8848

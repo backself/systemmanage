@@ -93,10 +93,17 @@ spring:
           # 将请求中去除掉第一个路径再访问服务
           filters:
             - StripPrefix=1
-        - id: gateway-urls
+        - id: gateway-users
           uri: lb://nacos-sys-users
           predicates:
             - Path=/back-sys/users/**
+          # 将请求中去除掉第一个路径再访问服务
+          filters:
+            - StripPrefix=1
+        - id: gateway-sso
+          uri: lb://nacos-sys-sso
+          predicates:
+            - Path=/back-sys/auth/**
           # 将请求中去除掉第一个路径再访问服务
           filters:
             - StripPrefix=1

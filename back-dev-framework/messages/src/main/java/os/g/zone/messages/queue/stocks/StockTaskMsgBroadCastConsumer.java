@@ -32,8 +32,12 @@ public class StockTaskMsgBroadCastConsumer implements RocketMQListener<String> {
         log.debug("接收到库存广播消息：【{}】=======【{}】=======",QueueMsgTopics.STOCKS,message);
         MessageTaskInfoDTO msg = JSONObject.parseObject(message,MessageTaskInfoDTO.class);
         BCMessageVO wsMsg = new BCMessageVO();
+        JSONObject content = new JSONObject();
+
         wsMsg.setDisplayPosition(DisplayPositionEnum.CARD_STOCKS.getPosition());
-        wsMsg.setContent(msg.getTaskContent());
+        content.put("count",1);
+        content.put("type",1);
+        wsMsg.setContent(content.toJSONString());
         webSocketService.sendToAllMessage(wsMsg);
     }
 }

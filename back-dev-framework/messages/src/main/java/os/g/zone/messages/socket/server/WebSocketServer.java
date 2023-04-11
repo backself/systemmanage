@@ -33,7 +33,8 @@ public class WebSocketServer {
         BCMessageVO<String> bcMessageVO = new BCMessageVO<>();
         bcMessageVO.setDisplayPosition(DisplayPositionEnum.CARD_ONLINE.getPosition());
         JSONObject content = new JSONObject();
-        content.put("changeCount",1);
+        content.put("count",1);
+        content.put("type",1);
         bcMessageVO.setContent(content.toJSONString());
         webSocketService.sendToAllMessage(bcMessageVO);
     }

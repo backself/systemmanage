@@ -5,7 +5,7 @@ server:
     context-path: /users # 配置访问根路径
 spring:
   profiles:
-    active: dev
+    active: test
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）

@@ -1,5 +1,6 @@
 package os.g.zone.messages.quartz;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.quartz.Job;
@@ -25,26 +26,18 @@ import java.util.List;
  * @Version 1.0.0
  */
 @Slf4j
-public class ReportsQuartzJob implements Job {
+public class MessagesQuartzJob implements Job {
 
     @Autowired
     private WebSocketService webSocketService;
-    @DubboReference
-    private ReportsInfoService dubboReportsInfoService;
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        Date now = new Date(System.currentTimeMillis());
-
-        ReportsDataPO reportsDataPO = new ReportsDataPO();
-        reportsDataPO.setType("0");
-        reportsDataPO.setStartTime(new Timestamp(DateUtils.getDayBegin(now).getTime()));
-        reportsDataPO.setEndTime(new Timestamp(DateUtils.getDayEnd(now).getTime()));
-        List<ReportsDataDTO> reportsDataDTO = dubboReportsInfoService.loadReportsData(reportsDataPO);
-        log.debug("报表定时任务数据：【{}】",reportsDataDTO);
+        JSONObject content = new JSONObject();
         BCMessageVO bcMessageVO = new BCMessageVO<>();
-        bcMessageVO.setDisplayPosition(DisplayPositionEnum.REPORTS.getPosition());
-        bcMessageVO.setContent(reportsDataDTO);
-//        webSocketService.sendToAllMessage(bcMessageVO); // 下发消息
-
+        bcMessageVO.setDisplayPosition(DisplayPositionEnum.CARD_MSG.getPosition());
+        content.put("count",1);
+        content.put("type",1);
+        bcMessageVO.setContent(content.toJSONString());
+        webSocketService.sendToAllMessage(bcMessageVO); // 下发消息
     }
 }

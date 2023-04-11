@@ -6,10 +6,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import os.g.zone.commons.consts.ReplyCode;
+import os.g.zone.commons.exceptions.ServiceException;
 import os.g.zone.sso.security.UserLoginDetails;
 import os.g.zone.sso.pojo.dto.SystemUserLoginParamsDTO;
 
@@ -26,6 +29,8 @@ public class SSOLoginService {
     private Long durationInMinute;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     public String login(SystemUserLoginParamsDTO systemUserLoginParamsDTO) {
         log.debug("开始处理【管理员登录】的业务，参数：{}", systemUserLoginParamsDTO);
@@ -63,4 +68,21 @@ public class SSOLoginService {
         log.debug("生成了JWT数据：{}", jwt);
         return jwt;
     }
+
+    public void logout(String token){
+        if (token != null) {
+            //拿到jwt token
+            //写入redis 锁住 这里采用list分日期存储,方便后续定时清理
+            String lockedTokenList="token_list_.lock";
+            stringRedisTemplate.boundSetOps(lockedTokenList).add(token);
+            Long add = stringRedisTemplate.boundSetOps(lockedTokenList).add(token);
+            if(add==0){
+                throw new ServiceException(ReplyCode.CONFLICT,"当前用户已经登出,不必重复登出");
+            }
+        }else{
+            //header不存在token
+            throw new ServiceException(ReplyCode.REQ_NOT_FOUND,"当前客户端没有登录状态");
+        }
+    }
+
 }
